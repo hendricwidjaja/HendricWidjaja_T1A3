@@ -1,8 +1,32 @@
 [
-    {"Balance Name": "Bob", "Entry": 1000, "Date": "2024-06-28"},
-    {"Balance Name": "Bob", "Entry": 200.50, "Date": "2024-06-28"},
-    {"Balance Name": "Bob", "Entry": -400, "Date": "2024-06-29"},
-    {"Balance Name": "Alice", "Entry": 500, "Date": "2024-06-27"},
-    {"Balance Name": "Alice", "Entry": 350, "Date": "2024-06-27"},
-    {"Balance Name": "Alice", "Entry": -100.50, "Date": "2024-06-27"}
+    {
+        "Balance Name": "Bob",
+        "Entry": 1000,
+        "Date": "2024-06-28"
+    },
+    {
+        "Balance Name": "Bob",
+        "Entry": 200.5,
+        "Date": "2024-06-28"
+    },
+    {
+        "Balance Name": "Bob",
+        "Entry": -400,
+        "Date": "2024-06-29"
+    },
+    {
+        "Balance Name": "Alice",
+        "Entry": 500,
+        "Date": "2024-06-27"
+    },
+    {
+        "Balance Name": "Alice",
+        "Entry": 350,
+        "Date": "2024-06-27"
+    },
+    {
+        "Balance Name": "Alice",
+        "Entry": -100.5,
+        "Date": "2024-06-27"
+    }
 ]
