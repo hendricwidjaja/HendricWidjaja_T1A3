@@ -25,8 +25,8 @@ def main ():
 
         print("------------------")
 
-        print("1. Create a balance")
-        print("2. Delete a balance")
+        print("1. Create a new balance")
+        print("2. Delete an existing balance")
         print("3. Select a balance")
         print("4. Exit")
 
