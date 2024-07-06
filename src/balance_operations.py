@@ -1,4 +1,5 @@
 from datetime import datetime
+import math
 from file_operations import save_balance
 # Need to import Colorama (for coloured text)
 # Need to import emoji (for emojis)
@@ -205,6 +206,55 @@ def edit_balance(entries, key):
             continue
 
 
+# Calculates amount required for each recurring payment frequency to pay debt by certain date
+def calculate_amount(entries, key, balance_name):
+    # Get payment frequency from user + calculate time period by taking away first payment date from last payment date (in days)
+    last_payment = request_date("What date should the debt be paid in full? (YYYY-MM-DD): ")            
+    frequency_choice = input("How often will payments be made?: " )
+
+    frequency_selection = {
+        "daily": 1,
+        "weekly": 7,
+        "fortnightly": 14,
+        "monthly": (365/12)
+        }
+
+    if frequency_choice.lower() not in frequency_selection:
+        print("Invalid frequency choice, Please enter daily, weekly, fortnightly or monthly.")
+        return
+    
+    payment_period = frequency_selection[frequency_choice]
+
+    first_payment = request_date("What is the date of the first payment? (YYYY-MM-DD): ")
+
+    try:
+        last_payment_date = datetime.strptime(last_payment, "%Y-%m-%d").date()
+        first_payment_date = datetime.strptime(first_payment, "%Y-%m-%d").date()
+    except ValueError as e:
+        print(f"Dates could not be recognised: {e}")
+        return
+
+    time_period = (last_payment_date - first_payment_date).days
+    if time_period <= 0:
+        print("Error, the date of the first payment must be before the due date.")
+        return
+    
+    # Divide total days by payment frequency + calculate rounded down payment intervals
+    payment_interval = time_period / payment_period
+    adjusted_payment_interval = math.floor(payment_interval)
+
+    # Calculate the payment amount required for each payment interval
+    choice_total = sum(entry["Entry"] for entry in account_balance_entries(entries, key, balance_name))
+    payment_amount = choice_total / payment_interval
+    payment_amount_rounded = round(payment_amount, 2)
+
+    # Calculate final payment required for when payment intervals have remainder days that don't fit in time period.
+    final_payment = choice_total - (payment_amount_rounded * adjusted_payment_interval)
+
+    # Print statement to user
+    print(f"To pay off '{balance_name}'s debt by {last_payment}, you'll need to pay ${payment_amount_rounded} on a {frequency_choice} basis and ${final_payment:.2f} as a final payment.")
+
+
 # Allows user to calculate debt based off 2x options.
 # Option 1: Allow user to calculate payment amount required to pay off specific debt by a certain date based off recurring payment frequency
 # Option 2: Allow user to calculate date that a specific debt will be paid off based off recurring payment amount & frequency
@@ -229,9 +279,8 @@ def debt_calculator(entries, key):
         print("---------------------------------")
         choice = input("Choose an option: ")
         print("---------------------------------")
-        # Calculate the payment amount required to pay off a debt by a certain date based off a specific payment frequency
         if choice == "1":
-            pass
+            calculate_amount(entries, key, balance_name)
         elif choice == "2":
             pass
         elif choice == "3":
