@@ -1,7 +1,7 @@
 # Main program
 
 #Import functions from operation files
-from balance_operations import balance_summaries, create_balance
+from balance_operations import balance_summaries, create_balance, delete_balance
 from file_operations import load_balance, save_balance
 
 # Determine file path
@@ -31,7 +31,7 @@ def main ():
         if choice == "1":
             create_balance(entries)
         elif choice == "2":
-            pass
+            delete_balance(entries, "Balance Name")
         elif choice == "3":
             pass
         elif choice == "4":

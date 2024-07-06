@@ -80,5 +80,29 @@ def create_balance(entries):
 
 
 # Delete a balance (if balance name = "x", delete entry)
+def delete_balance(entries, key):
+
+    deletion_name = input("Which balance would you like to delete?: ")
+    if not any(entry["Balance Name"] == deletion_name for entry in entries):
+        print(f"'{deletion_name}' does not exist, please enter an existing balance to delete.")
+        return entries
+
+    confirmation = input(f"Are you sure you want to delete '{deletion_name}'? (Enter Y or N): ")
+    if confirmation.lower() == "y":
+        new_entries = []
+        for entry in entries:
+            if entry.get(key) != deletion_name:
+                new_entries.append(entry)
+
+        save_balance(FILE_PATH, new_entries)
+        print(f"'{deletion_name}' has been deleted successfully.")
+        return new_entries
+    elif confirmation.lower() == "n":
+        print(f"Balance deletion for '{deletion_name}' has been cancelled")
+        return entries
+    # TypeError
+    else:
+        print("User input cannot be recognised. Please try again")
+        return entries
 
 # Select a balance (Allow user to view balance history)
