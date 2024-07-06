@@ -203,3 +203,38 @@ def edit_balance(entries, key):
         else:
             print("Invalid option, please try again (Enter 1 - 3).")
             continue
+
+
+# Allows user to calculate debt based off 2x options.
+# Option 1: Allow user to calculate payment amount required to pay off specific debt by a certain date based off recurring payment frequency
+# Option 2: Allow user to calculate date that a specific debt will be paid off based off recurring payment amount & frequency
+def debt_calculator(entries, key):
+    balance_name = input("Which balance would you like to select? (Enter a balance name): ")
+    choice_total = account_balance_entries(entries, key, balance_name)
+
+    if not choice_total:
+        print(f"'{balance_name}' does not exist, please select an existing balance.")
+        return
+
+    while True:
+        print("---------------------------------")
+        balance_summaries(choice_total)
+        print("---------------------------------")
+        print("Frequency options = time period (daily, weekly, fortnightly, monthly)")
+        print("---------------------------------")
+        print("What would you like to calculate?")
+        print(f"1. Calculate the payment amount required to pay off '{balance_name}' by a certain date, based off a recurring payment frequency.")
+        print(f"2. Calculate the date that '{balance_name}' will be paid off based off a recurring payment amount & frequency.")
+        print("3. Back to main menu")
+        print("---------------------------------")
+        choice = input("Choose an option: ")
+        print("---------------------------------")
+        # Calculate the payment amount required to pay off a debt by a certain date based off a specific payment frequency
+        if choice == "1":
+            pass
+        elif choice == "2":
+            pass
+        elif choice == "3":
+            return
+        else:
+            print("Please choose a valid option (1-3).")
