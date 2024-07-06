@@ -2,11 +2,12 @@ import json
 from colorama import Fore
 from emoji import emojize
 
+
 FILE_PATH = "../data/debt_balances.json"
 
-# Load balances from JSON file to access entries
-def load_balance(file_path):
 
+def load_balance(file_path):
+# Load balances from JSON file to access entries
     try:
         with open(file_path, "r") as file:
             entries = json.load(file)
@@ -21,8 +22,9 @@ def load_balance(file_path):
         print(f"{Fore.RED}{emojize(':crying_face:')} Unexpected error occured: {e}{Fore.RESET}")
         return[]
 
-# Save a new balance/entry into the JSON file
+
 def save_balance(file_path, entries):
+# Save a new balance/entry into the JSON file
     try:
         with open(file_path, "w") as file:
             json.dump(entries, file, indent=4)

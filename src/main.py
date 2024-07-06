@@ -1,26 +1,26 @@
-#Import functions
-from balance_operations import balance_summaries, create_balance, delete_balance, edit_balance, debt_calculator
+from balance_operations import(
+    balance_summaries, create_balance, delete_balance,
+    edit_balance, debt_calculator,
+)
 from file_operations import load_balance, save_balance
 from colorama import Fore, Style
 from emoji import emojize
 
+
 # Determine file path for balance data
 FILE_PATH = "../data/debt_balances.json"
 
-# Main program showing options
-def main ():
-    # Use load_balances function to read/load balance entries and store into "entries" variable
+
+def main():
+# Main function displaying main menu
     entries = load_balance(FILE_PATH)
     
     while True:
         print("---------------------------------")
         print(f"{Fore.BLUE}Debt Tracker {emojize(':bullseye:')}{Fore.RESET}")
         print("---------------------------------")
-
         balance_summaries(entries)
-
         print("---------------------------------")
-
         print(f"1. {emojize(':check_mark_button:')} Create a new balance")
         print(f"2. {emojize(':cross_mark:')} Delete an existing balance")
         print(f"3. {emojize(':eyes:')} Edit/View a balance")
