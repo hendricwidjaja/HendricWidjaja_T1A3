@@ -126,6 +126,8 @@ def balance_history(choice_total, balance_name):
         entry_date = each.get("Date")
         print(f"{entry_date}: ${entry_value}")
 
+
+# Allows user to create an entry for selected balance
 def create_entry(entries, choice_total, balance_name):
     choice_total_balance = sum(entry['Entry'] for entry in choice_total)
     try:
@@ -149,6 +151,25 @@ def create_entry(entries, choice_total, balance_name):
     save_balance(FILE_PATH, entries)
     print(f"Success! An entry of ${entry_amount} was created for '{balance_name}'")
     return
+
+
+# Allows user to delete an entry for selected balance
+def delete_entry(entries, choice_total, balance_name):
+    print("Balance History:")
+    for index, entry in enumerate(choice_total):
+        print(f"{index + 1}: {entry['Date']}: {entry['Entry']} ({balance_name})")
+    try:
+        entry_index = int(input("Enter the index of the entry you want to delete: ")) - 1
+        if 0 <= entry_index < len(choice_total):
+            entry_to_delete = choice_total[entry_index]              
+            entries.remove(entry_to_delete)
+            save_balance(FILE_PATH, entries)
+            print(f"Entry {entry_index + 1} for '{balance_name}' has been deleted successfully!")
+        else:
+            print(f"Invalid input, please enter an index between 1 and {len(choice_total)}.")
+    except ValueError:
+        print(f"Value Error: Invalid input, please enter a valid index between 1 and {len(choice_total)}.")
+
 
 # Select a balance (Allow user to view balance history and edit balances)
 def edit_balance(entries, key):
@@ -174,7 +195,8 @@ def edit_balance(entries, key):
             create_entry(entries, choice_total, balance_name)
             choice_total = account_balance_entries(entries, key, balance_name)
         elif choice == "2":
-            pass
+            delete_entry(entries, choice_total, balance_name)
+            choice_total = account_balance_entries(entries, key, balance_name)
         elif choice == "3":
             break
         else:
