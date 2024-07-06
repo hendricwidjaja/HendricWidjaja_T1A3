@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import math
 from file_operations import save_balance
 # Need to import Colorama (for coloured text)
@@ -255,6 +255,55 @@ def calculate_amount(entries, key, balance_name):
     print(f"To pay off '{balance_name}'s debt by {last_payment}, you'll need to pay ${payment_amount_rounded} on a {frequency_choice} basis and ${final_payment:.2f} as a final payment.")
 
 
+# Calculate the date that debt will be paid off based off a recurring payment amount and frequency
+def calculate_date(entries, key, balance_name):
+
+    # Get payment period/frequency input from user
+    frequency_choice = input("How often will payments be made?: " )
+
+    frequency_selection = {
+        "daily": 1,
+        "weekly": 7,
+        "fortnightly": 14,
+        "monthly": (365/12)
+        }
+    
+    if frequency_choice.lower() not in frequency_selection:
+        print("Invalid frequency choice, Please enter daily, weekly, fortnightly or monthly.")
+        return
+    
+    payment_period = frequency_selection[frequency_choice]
+
+    # Get $ amount from user (incl. error handling to ensure amount is greater than $0)
+    try:
+        payment_amount = float(input(f"How much can be paid per {frequency_choice}?: "))
+        if payment_amount <= 0:
+            print("Payment amount must be greater than $0")
+            return
+    except ValueError:
+        print("Error, amount could not be detected. Please enter a valid amount.")
+        return
+
+    # Get date of first payment from user & convert into date format
+    first_payment = request_date("What is the date of the first payment? (YYYY-MM-DD): ")
+    first_payment_date = datetime.strptime(first_payment, "%Y-%m-%d").date()
+
+    # Retrieve total balance information of chosen account
+    choice_total = sum(entry["Entry"] for entry in account_balance_entries(entries, key, balance_name))
+    
+    # Calculate days required to pay off debt using total balance, payment period and payment amount
+    days_required = (choice_total / payment_amount) * payment_period
+
+    # Calculate final date for when debt will be paid (in date format)
+    final_debt_payment = first_payment_date + timedelta(days=days_required)
+
+    # Convert date format of 'final debt payment' to a string
+    final_debt_payment_date = final_debt_payment.strftime("%Y-%m-%d")
+
+    # Print results to user
+    print(f"If ${payment_amount:.2f} is paid on a {frequency_choice.lower()} basis starting on {first_payment}, the debt for '{balance_name}' will be paid off by {final_debt_payment_date}")
+
+
 # Allows user to calculate debt based off 2x options.
 # Option 1: Allow user to calculate payment amount required to pay off specific debt by a certain date based off recurring payment frequency
 # Option 2: Allow user to calculate date that a specific debt will be paid off based off recurring payment amount & frequency
@@ -282,7 +331,7 @@ def debt_calculator(entries, key):
         if choice == "1":
             calculate_amount(entries, key, balance_name)
         elif choice == "2":
-            pass
+            calculate_date(entries, key, balance_name)
         elif choice == "3":
             return
         else:
