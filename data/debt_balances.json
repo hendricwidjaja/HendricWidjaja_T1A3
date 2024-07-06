@@ -28,5 +28,10 @@
         "Balance Name": "Alice",
         "Entry": -100.5,
         "Date": "2024-06-27"
+    },
+    {
+        "Balance Name": "James",
+        "Entry": 400.0,
+        "Date": "2024-07-06"
     }
 ]

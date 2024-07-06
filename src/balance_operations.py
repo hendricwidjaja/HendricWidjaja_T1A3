@@ -35,23 +35,40 @@ def balance_summaries(entries):
     for balance_name, total in total_balance.items():
         print(f"{balance_name}: ${total:.2f}")
 
+# Requests input from the user in the form of a date (YYYY-MM-DD).
+# If user input is empty, returns today's date
+# Date validation for error handling (checking if date entered is in YYYY-MM-DD format)    
+def request_date(date_input):
+    while True:
+        user_date = input(date_input)
+        if not user_date:
+            return datetime.today().strftime("%Y-%m-%d")
+        try: 
+            datetime.strptime(user_date, "%Y-%m-%d")
+            return user_date
+        except ValueError:
+            print("Date could not be recognised. Please enter a date using (YYYY-MM-DD) format.")
 
 # Create a balance (if balance name does not exist, create 1st entry (incl. balance name, entry amount & date))
 def create_balance(entries):
+
     print("Please enter the following details")
     balance_name = input("Balance Name: ")
     if any(entry["Balance Name"] == balance_name for entry in entries):
-        print("Balance name already exists. Please create a balance with a unique name")
+        print(f"'{balance_name}' already exists. Please create a balance with a unique name.")
+        return 
+    try:
+        balance_amount = float(input("Balance Amount: "))
+        if balance_amount < 0:
+            print("Invalid entry amount. Balance cannot be less than $0")
+            return
+    except ValueError:
+        print("Invalid entry. Amount can only include numbers")
         return
-    balance_amount = float(input("Balance Amount: "))
-    print("------------------")
-    print("Leaving the date input blank will return today's date")
-    print("------------------")
-    balance_date = input("Date (YYYY-MM-DD):")
-
-    # If balance_date variable holds no value, insert today's date in string format (JSON file cannot hold date values)
-    if not balance_date:
-        balance_date = datetime.today().strftime('%Y-%m-%d')
+    
+    print("-----------------------------------------------------------")
+    print("NOTE: Leaving the date input blank will return today's date")
+    balance_date = request_date("Date (YYYY-MM-DD): ")
 
     # Store new entry in "new_balance" variable
     new_balance = {"Balance Name": balance_name, "Entry": balance_amount, "Date": balance_date}
@@ -59,7 +76,7 @@ def create_balance(entries):
     entries.append(new_balance)
     # Use save_balance function to rewrite entries (incl. new_balance)
     save_balance(FILE_PATH, entries)
-    print(f"Your entry for '{balance_name}' has been created successfully.")
+    print(f"Success! You have created a balance of ${balance_amount} for '{balance_name}'.")
 
 
 # Delete a balance (if balance name = "x", delete entry)
