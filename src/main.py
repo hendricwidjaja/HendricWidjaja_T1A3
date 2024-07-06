@@ -1,7 +1,7 @@
 # Main program
 
 #Import functions from operation files
-from balance_operations import balance_summaries, create_balance, delete_balance
+from balance_operations import balance_summaries, create_balance, delete_balance, edit_balance
 from file_operations import load_balance, save_balance
 
 # Determine file path
@@ -33,7 +33,7 @@ def main ():
         elif choice == "2":
             delete_balance(entries, "Balance Name")
         elif choice == "3":
-            pass
+            edit_balance(entries, "Balance Name")
         elif choice == "4":
             save_balance(FILE_PATH, entries)
             print("All balance information has been saved. Thanks for using Debt Tracker 🎯. Come back soon!")

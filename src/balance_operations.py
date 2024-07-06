@@ -105,4 +105,41 @@ def delete_balance(entries, key):
         print("User input cannot be recognised. Please try again")
         return entries
 
-# Select a balance (Allow user to view balance history)
+def account_balance_entries(entries, account_name, balance_name):
+
+    combined_entries = []
+
+    for entry in entries:
+        if entry.get(account_name) == balance_name:
+            combined_entries.append(entry)
+
+    return combined_entries
+
+# Select a balance (Allow user to view balance history and edit balances)
+def edit_balance(entries, key):
+    balance_name = input("Which balance would you like to select? (Enter a balance name): ")
+    choice_total = account_balance_entries(entries, key, balance_name)
+
+    if not choice_total:
+        print(f"'{balance_name}' does not exist, please select an existing balance.")
+        return
+
+    while True:
+        print("---------------------------------")
+        print("What would you like to do?")
+        print("1. Create an entry (increase or decrease)")
+        print("2. Delete an entry")
+        print("3. Back to main menu")
+        print("---------------------------------")
+        choice = input("Choose an option: ")
+
+
+        if choice == "1":
+            pass
+        elif choice == "2":
+            pass
+        elif choice == "3":
+            break
+        else:
+            print("Invalid option, please try again (Enter 1 - 3).")
+            continue
