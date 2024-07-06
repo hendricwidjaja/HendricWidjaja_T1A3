@@ -1,4 +1,6 @@
 import json
+from colorama import Fore
+from emoji import emojize
 
 FILE_PATH = "../data/debt_balances.json"
 
@@ -10,13 +12,13 @@ def load_balance(file_path):
             entries = json.load(file)
         return entries
     except FileNotFoundError:
-        print("File not found. Please check if debt_balances.json file exists")
+        print(f"{Fore.RED}{emojize(':crying_face:')} File not found. Please check if debt_balances.json file exists.{Fore.RESET}")
         return[]
     except json.JSONDecodeError:
-        print(f"Decoding error detected in balance database (JSON file): {e}")
+        print(f"{Fore.RED}{emojize(':crying_face:')} Decoding error detected in balance database (JSON file): {e}{Fore.RESET}")
         return []
     except Exception as e:
-        print(f"Unexpected error occured: {e}")
+        print(f"{Fore.RED}{emojize(':crying_face:')} Unexpected error occured: {e}{Fore.RESET}")
         return[]
 
 # Save a new balance/entry into the JSON file
@@ -25,4 +27,4 @@ def save_balance(file_path, entries):
         with open(file_path, "w") as file:
             json.dump(entries, file, indent=4)
     except Exception as e:
-        print(f"Error. Entry failed to save: {e}")
+        print(f"{Fore.RED}{emojize(':crying_face:')} Error. Entry failed to save: {e}{Fore.RESET}")

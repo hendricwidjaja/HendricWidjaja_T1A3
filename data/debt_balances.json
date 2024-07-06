@@ -55,8 +55,13 @@
         "Date": "2024-07-06"
     },
     {
+        "Balance Name": "John",
+        "Entry": 300.0,
+        "Date": "2024-07-07"
+    },
+    {
         "Balance Name": "Julie",
         "Entry": 500.0,
-        "Date": "2024-07-06"
+        "Date": "2024-07-07"
     }
 ]
