@@ -172,6 +172,7 @@ def edit_balance(entries, key):
 
         if choice == "1":
             create_entry(entries, choice_total, balance_name)
+            choice_total = account_balance_entries(entries, key, balance_name)
         elif choice == "2":
             pass
         elif choice == "3":
