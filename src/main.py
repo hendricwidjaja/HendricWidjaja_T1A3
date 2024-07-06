@@ -23,7 +23,7 @@ def main ():
 
         print("1. Create a new balance")
         print("2. Delete an existing balance")
-        print("3. Select a balance")
+        print("3. Edit/View a balance")
         print("4. Exit")
 
         choice = input("Choose an option: ")

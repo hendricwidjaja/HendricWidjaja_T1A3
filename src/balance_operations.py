@@ -126,6 +126,29 @@ def balance_history(choice_total, balance_name):
         entry_date = each.get("Date")
         print(f"{entry_date}: ${entry_value}")
 
+def create_entry(entries, choice_total, balance_name):
+    choice_total_balance = sum(entry['Entry'] for entry in choice_total)
+    try:
+        entry_amount = float(input("Entry Amount: "))
+
+        if choice_total_balance + entry_amount < 0:
+            print("Invalid entry amount. The balance cannot be less than $0.")
+            return
+    except ValueError:
+        print("Invalid entry. Amount can only include numbers.")
+        return
+
+    print("-----------------------------------------------------------")
+    print("NOTE: Leaving the date input blank will return today's date")
+    entry_date = request_date("Date (YYYY-MM-DD): ")
+
+    new_entry = {"Balance Name": balance_name, "Entry": entry_amount, "Date": entry_date}
+
+    entries.append(new_entry)
+
+    save_balance(FILE_PATH, entries)
+    print(f"Success! An entry of ${entry_amount} was created for '{balance_name}'")
+    return
 
 # Select a balance (Allow user to view balance history and edit balances)
 def edit_balance(entries, key):
@@ -148,7 +171,7 @@ def edit_balance(entries, key):
 
 
         if choice == "1":
-            pass
+            create_entry(entries, choice_total, balance_name)
         elif choice == "2":
             pass
         elif choice == "3":
