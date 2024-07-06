@@ -3,7 +3,7 @@ import json
 FILE_PATH = "../data/debt_balances.json"
 
 # Load balances from JSON file to access entries
-def load_balances(file_path):
+def load_balance(file_path):
 
     try:
         with open(file_path, "r") as file:

@@ -4,8 +4,8 @@ from file_operations import save_balance
 
 FILE_PATH = "../data/debt_balances.json"
 
-# View a summary of all balances (if balance names are the same, add all entry amounts)
-def balance_summaries(entries):
+# Create a dictionary which contains all balance names with corresponding total debt amount
+def calculate_total_balance(entries):
     # Initialize empty dictionary to contain summary of each balance
     total_balance = {}
     # For each entry in the JSON file, access the "Balance Name" & "Entry" values and store them into the variables: balance_name & entry_amount
@@ -18,6 +18,19 @@ def balance_summaries(entries):
         # Else, if the balance_name is not yet a key in the total_balance dictionary, create a new key-value pair and set the value to the corresponding entry_amount
         else:
             total_balance[balance_name] = entry_amount
+    return total_balance
+
+# View a summary of all balances (if balance names are the same, add all entry amounts)
+def balance_summaries(entries):
+    # If "entries" is empty, advise the user that there are no balances available and execute "Create balance" function
+    if not entries:
+        print("No balances available. Create a new balance")
+        create_balance(entries)
+        print("---------------------------------")
+        print("Debt Tracker 🎯")
+        print("---------------------------------")
+    # Initialize empty dictionary to contain summary of each balance
+    total_balance = calculate_total_balance(entries)
     # .items() method to iterate through total_balance dictionary and assign each balance_name with its corresponding total. Then print.
     for balance_name, total in total_balance.items():
         print(f"{balance_name}: ${total:.2f}")
