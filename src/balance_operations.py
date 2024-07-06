@@ -115,6 +115,18 @@ def account_balance_entries(entries, account_name, balance_name):
 
     return combined_entries
 
+
+# Choice total = list of entries from specific balance
+# Prints all entries 
+def balance_history(choice_total, balance_name):
+    print("---------------------------------")
+    print(f"{balance_name}'s Balance History:")
+    for each in choice_total:
+        entry_value = each.get("Entry")
+        entry_date = each.get("Date")
+        print(f"{entry_date}: ${entry_value}")
+
+
 # Select a balance (Allow user to view balance history and edit balances)
 def edit_balance(entries, key):
     balance_name = input("Which balance would you like to select? (Enter a balance name): ")
@@ -125,6 +137,7 @@ def edit_balance(entries, key):
         return
 
     while True:
+        balance_history(choice_total, balance_name)
         print("---------------------------------")
         print("What would you like to do?")
         print("1. Create an entry (increase or decrease)")
