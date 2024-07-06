@@ -1,6 +1,7 @@
 from datetime import datetime
 from file_operations import save_balance
-
+# Need to import Colorama (for coloured text)
+# Need to import emoji (for emojis)
 
 FILE_PATH = "../data/debt_balances.json"
 

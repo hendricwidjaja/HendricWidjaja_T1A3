@@ -31,7 +31,7 @@ def main ():
         if choice == "1":
             create_balance(entries)
         elif choice == "2":
-            delete_balance(entries, "Balance Name")
+            entries = delete_balance(entries, "Balance Name")
         elif choice == "3":
             edit_balance(entries, "Balance Name")
         elif choice == "4":
