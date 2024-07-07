@@ -13,12 +13,21 @@ def calculate_total_balance(entries):
     total_balance = {}
 
     for entry in entries: 
-        balance_name = entry["Balance Name"]
-        entry_amount = entry["Entry"]
+        try:
+            balance_name = entry["Balance Name"]
+            entry_amount = entry["Entry"]
+        except KeyError:
+            print(f"{Fore.RED}{emojize(':crying_face:')} Key error detected. Check the entry format in entries/JSON file.{Fore.RESET}")
+            continue
+        except TypeError:
+            print(f"{Fore.RED}{emojize(':crying_face:')} Type error detected. Check the entry format in entries/JSON file.{Fore.RESET}")
+            continue
+
         if balance_name in total_balance:
             total_balance[balance_name] += entry_amount
         else:
             total_balance[balance_name] = entry_amount
+
     return total_balance
 
 
@@ -60,11 +69,11 @@ def create_balance(entries):
         return 
     try:
         balance_amount = float(input(f"{Fore.YELLOW}Balance Amount: {Fore.RESET}"))
-        if balance_amount < 0:
+        if balance_amount <= 0:
             print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry amount. Balance cannot be less than $0.{Fore.RESET}")
             return
     except ValueError:
-        print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry. Amount can only include numbers.{Fore.RESET}")
+        print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry. Amount can only include a number.{Fore.RESET}")
         return
     
     print("-----------------------------------------------------------")
@@ -81,7 +90,7 @@ def create_balance(entries):
 
 def delete_balance(entries, key):
 # Delete a balance based off balance name as input.
-    deletion_name = input(f"{Fore.YELLOW}Which balance would you like to delete?: {Fore.RESET}")
+    deletion_name = input(f"{Fore.YELLOW}Which balance would you like to delete? (Case sensitive): {Fore.RESET}")
     if not any(entry["Balance Name"] == deletion_name for entry in entries):
         print(f"{Fore.RED}{emojize(':crying_face:')} '{deletion_name}' does not exist, please enter an existing balance to delete.{Fore.RESET}")
         return entries
@@ -127,14 +136,23 @@ def balance_history(choice_total, balance_name):
 def create_entry(entries, choice_total, balance_name):
 # Allows user to create an entry for a selected balance.
     choice_total_balance = sum(entry['Entry'] for entry in choice_total)
-    try:
-        entry_amount = float(input(f"{Fore.YELLOW}Entry Amount: {Fore.RESET}"))
-        if choice_total_balance + entry_amount < 0:
-            print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry amount. The balance cannot be less than $0.{Fore.RESET}")
+    
+    while True:
+        try:
+            entry_amount = float(input(f"{Fore.YELLOW}Entry Amount: {Fore.RESET}"))
+            if entry_amount == 0:
+                print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry amount. The entry amount cannot be $0.{Fore.RESET}")
+                continue
+            if choice_total_balance + entry_amount < 0:
+                print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry amount. The entry amount cannot be less than $0.{Fore.RESET}")
+                continue
+            break
+        except ValueError:
+            print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry. Amount can only include a number.{Fore.RESET}")
             return
-    except ValueError:
-        print(f"{Fore.RED}{emojize(':crying_face:')} Invalid entry. Amount can only include numbers.{Fore.RESET}")
-        return
+        except Exception as e:
+            print(f"{Fore.RED}{emojize(':crying_face:')} Unknown error: {e}.{Fore.RESET}")
+            return
 
     print("-----------------------------------------------------------")
     print(f"{Style.BRIGHT}NOTE: Leaving the date input blank will return today's date.{Style.RESET_ALL}")
@@ -153,7 +171,7 @@ def delete_entry(entries, choice_total, balance_name):
 # Allows user to delete an entry for a selected balance.
     print(f"{Fore.BLUE}Balance History:{Fore.RESET}")
     for index, entry in enumerate(choice_total):
-        print(f"{Fore.CYAN}{index + 1}{Fore.RESET}: {entry['Date']}: {entry['Entry']} ({balance_name})")
+        print(f"{Fore.CYAN}{index + 1}{Fore.RESET}: {entry['Date']}: ${entry['Entry']} ({balance_name})")
     try:
         entry_index = int(input(f"{Fore.YELLOW}Enter the index of the entry you want to delete: {Fore.RESET}")) - 1
         if 0 <= entry_index < len(choice_total):
@@ -165,6 +183,8 @@ def delete_entry(entries, choice_total, balance_name):
             print(f"{Fore.RED}{emojize(':crying_face:')} Invalid input, please enter an index between 1 and {len(choice_total)}.{Fore.RESET}")
     except ValueError:
         print(f"{Fore.RED}{emojize(':crying_face:')} Value Error: Invalid input, please enter a valid index between 1 and {len(choice_total)}.{Fore.RESET}")
+    except Exception as e:
+        print(f"{Fore.RED}{emojize(':crying_face:')} Unknown Error: {e}.{Fore.RESET}")
 
 
 def edit_balance(entries, key):
@@ -228,7 +248,7 @@ def calculate_amount(entries, key, balance_name):
 
     time_period = (last_payment_date - first_payment_date).days
     if time_period <= 0:
-        print(f"{Fore.RED}{emojize(':crying_face:')} Error, the date of the first payment must be before the due date.{Fore.RESET}")
+        print(f"{Fore.RED}{emojize(':crying_face:')} Error, the first payment date must be prior to the debt's scheduled final payment date.{Fore.RESET}")
         return
     
     payment_interval = time_period / payment_period

@@ -28,5 +28,9 @@ def save_balance(file_path, entries):
     try:
         with open(file_path, "w") as file:
             json.dump(entries, file, indent=4)
+    except FileNotFoundError:
+        print(f"{Fore.RED}{emojize(':crying_face:')} File not found. Please check if debt_balances.json file exists.{Fore.RESET}")
+    except json.JSONDecodeError:
+        print(f"{Fore.RED}{emojize(':crying_face:')} Decoding error detected in balance database (JSON file): {e}{Fore.RESET}")
     except Exception as e:
         print(f"{Fore.RED}{emojize(':crying_face:')} Error. Entry failed to save: {e}{Fore.RESET}")
