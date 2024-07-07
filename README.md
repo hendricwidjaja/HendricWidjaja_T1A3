@@ -19,6 +19,11 @@ Please use the links below to quickly access key parts of this documentation
     - [Other Features](#other-features)
 - [Implementation Plan (Trello)](#implementation-plan-trello)
 - [Help Documentation](#help-documentation)
+    - [Important Notes](#important-notes)
+    - [Application Install Guide](#application-install-guide)
+    - [Dependencies List](#dependencies-list)
+    - [System/Hardware Requirements](#systemhardware-requirements)
+    - [Command Line Arguments](#command-line-arguments)
 
 
 ## Source Control Repository
@@ -306,3 +311,6 @@ The function allows the user to calculate the date that a debt will be paid off 
 7. A success message will appear providing the results of the inputs, advising that if the user pays $x amount on the chosen frequency period, the selected debt will be paid by a certain date.
 
 ![Calculate Date Function Example](docs/calculate_date_example.png)
+
+
+# END OF DOCUMENTATION
