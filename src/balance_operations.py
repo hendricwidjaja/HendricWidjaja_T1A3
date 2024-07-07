@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
 import math
+
 from colorama import Fore, Style
 from emoji import emojize
+
 from file_operations import save_balance
 
 

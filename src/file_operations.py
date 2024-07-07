@@ -1,4 +1,5 @@
 import json
+
 from colorama import Fore
 from emoji import emojize
 
