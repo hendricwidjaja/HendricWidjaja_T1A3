@@ -14,6 +14,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Activate virtual environment
+source venv/bin/activate
+if [ $? -ne 0 ]; then
+    echo "Virtual Environment could not be activated. Exiting..."
+    exit 1
+fi
+
 # Run run_app.sh to run main application
 ./run_app.sh
 if [ $? -ne 0 ]; then
