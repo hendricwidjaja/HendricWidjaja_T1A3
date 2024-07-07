@@ -1,6 +1,6 @@
 from balance_operations import(
-    balance_summaries, create_balance, delete_balance,
-    edit_balance, debt_calculator,
+    balance_summaries, create_balance, debt_calculator, 
+    delete_balance, edit_balance
 )
 from file_operations import load_balance, save_balance
 from colorama import Fore, Style

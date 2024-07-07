@@ -1,2 +1,2 @@
-emoji==2.12.1
 colorama==0.4.6
+emoji==2.12.1
