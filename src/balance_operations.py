@@ -7,7 +7,7 @@ from emoji import emojize
 from file_operations import save_balance
 
 
-FILE_PATH = "../data/debt_balances.json"
+FILE_PATH = "./data/debt_balances.json"
 
 
 def calculate_total_balance(entries):

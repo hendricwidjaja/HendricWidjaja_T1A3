@@ -4,7 +4,7 @@ from colorama import Fore
 from emoji import emojize
 
 
-FILE_PATH = "../data/debt_balances.json"
+FILE_PATH = "./data/debt_balances.json"
 
 
 def load_balance(file_path):

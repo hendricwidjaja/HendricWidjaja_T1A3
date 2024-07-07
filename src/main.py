@@ -9,7 +9,7 @@ from emoji import emojize
 
 
 # Determine file path for balance data
-FILE_PATH = "../data/debt_balances.json"
+FILE_PATH = "./data/debt_balances.json"
 
 
 def main():
