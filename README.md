@@ -168,3 +168,141 @@ This documentation has been written for the purpose of providing information reg
 - Dependencies required by the application to operate
 - Any system/hardware requirements
 - How to use any command line arguments made for this application
+
+The application comes with pre-populated data as per below. This can be deleted by either manually deleting the entries in the [debt_balances.json](./data/debt_balances.json) file or running the application and selecting option "2" on the main menu and following the prompts.
+
+![Debt Tracker Main Menu screenshot](./docs/debt_tracker_main_menu.png)
+- 
+
+### Application Install Guide
+The installation of Debt Tracker can be installed as per the below steps:
+
+1. Download the 'HendricWidjaja_T1A3' zip file from the [GitHub](https://github.com/hendricwidjaja/HendricWidjaja_T1A3) repository for the application (if not done already).
+2. Unzip the file
+3. Right click the /src folder and select "New Terminal at folder".
+4. Enter the command below to run the <u>main_script.sh</u> 
+```
+./main_script.sh
+```
+5. This script will run the application automatically including:
+- checking for python3
+- creating a virtual environment
+- downloading required dependencies
+- running the application
+- deactivating the virtual environment once the application is closed
+
+### Dependencies List
+Python3 is required to run this app. If the below error appears when running the above steps, please go to [https://www.python.org/downloads/](https://www.python.org/downloads/) to download Python3.
+
+```
+You don't have Python3 installed. Please install Python3 and try again.
+```
+
+The required dependencies to run this application include:
+- colorama==0.4.6
+- emoji==2.12.1
+
+<b>NOTE: If install is successful, the above dependencies will automatically be downloaded in the virtual environment.</b>
+
+### System/Hardware Requirements
+Python3 can be installed on a variety of operating systems. Please see below:
+
+According to an [article](https://support.enthought.com/hc/en-us/articles/204273874-Enthought-Python-Minimum-Hardware-Requirements) by Jonathan March (25th January 2023), the below requirements would more than suffice. 
+- Modern Operating System: 
+    - Windows 7 or 10
+    - Mac OS X 10.11 or higher, 64-bit
+    - Linux: RHEL 6/7
+- x86 64-bit CPU (Intel / AMD architecture). ARM CPUs are not supported.
+- 4 GB RAM (preferred)
+- 5 GB free disk space (preferred)
+
+### Command Line Arguments
+The Debt Tracker application has been designed to be user friendly and intuitive, with various tips on user input scattered throughout the application. The error handling messages that have been integrated allows the user to also re-attempt inputs correctly. A run through of how to execute the main functions of the application are listed below.
+
+<b><i>NOTE: All steps start from the main menu of the application</i></b>
+
+![Debt Tracker Main Menu](docs/debt_tracker_main_menu.png)
+
+#### Create Balance Function
+This function allows the creation of an entirely new balance into the JSON file. It will require various user input such as “Balance Name”, “Balance amount” and “Date” of entry. It will ensure that the user input is inserted into the JSON file in the correct format. Please follow the below steps:
+
+1. Input "1" in the command line to execute "Create a new balance" option.
+2. Input a name for the new balance (e.g. "Example 3")
+3. Input an amount for the balance (e.g. "500")
+4. Input a date in YYYY-MM-DD format (e.g. "2024-07-07)
+    - <i>Note: If no input is inserted, the date will automatically be set to today's date.</i>
+5. A success message will appear if you have completed the above steps correctly.
+
+![Create balance function example](docs/create_balance_example.png)
+
+#### Delete Balance Function
+This function is a main feature and will allow the user to delete a specific balance from the JSON file. As it cannot be undone, it will require a confirmation from user that they want to delete the specific balance. It will require user input to enter the balance name they want to delete and rewrite the JSON file with a new list which does not contain the specified balance name entries. Please follow the below steps:
+
+1. Input "2" in the command line to execute "Delete an existing balance" option.
+2. Input the name of the balance you wish to delete (e.g. "Balance 3")
+    - <i>NOTE: This input is case sensitive. An error message will appear if the user input does not match any balance names.</i>
+3. Input "Y" or "N" when the program asks if you are sure you want to delete the balance.
+4. A success message will appear if you have completed the above steps correctly.
+
+![Delete Balance Function example](docs/delete_balance_example.png)
+
+#### Create Entry Function
+This main feature allows the user to create a new entry for a specified balance. This is done by requesting inputs from the user such as “date” of entry and “entry amount”. The program will append this new entry into the JSON file and save/overwrite this as the new updated file. A message will then be printed to the user to advise if the entry was entered successfully. Please follow the below steps:
+
+1. Input "3" in the command line to execute "Edit/View a balance" option.
+2. Input the name of the balance you would like to edit/view (e.g. "Example 2")
+    - <i>NOTE: A balance history of the selected balance will appear and a new menu will appear.</i>
+3. Input "1" in the command line to execute "Create an entry (increase or decrease)" option.
+4. Input an "Entry Amount" (e.g. 250)
+5. Input a date in YYYY-MM-DD format (e.g. "2024-07-07)
+6. A success message will appear if you have completed the above steps correctly.
+    - <i>NOTE: The program will take the user back to the 'edit/view' menu where the user will be able to see the newly created entry.</i>
+
+![Create Entry Function Example](docs/create_entry_example.png)
+
+    
+#### Delete Entry Function
+The main feature allows the user to delete an entry from the JSON file for a pre-specified balance. The function firstly prints all the entries for the specified balance with its corresponding index (as well as “date” of entry and “entry amount”). It will then request an index number as an input from the user to be deleted. The corresponding entry of the index number will then be removed from the JSON file and the updated file will be saved/overwritten without the deleted entry. A message will then be printed to the user that the specific entry has been deleted. Please follow the below steps:
+
+1. Input "3" in the command line to execute "Edit/View a balance" option.
+2. Input the name of the balance you would like to edit/view (e.g. "Example 2")
+    - <i>NOTE: A balance history of the selected balance will appear and a new menu will appear.</i>
+3. Input "2" in the command line to execute "Delete an entry" option.
+    - <i>NOTE: An updated balance history will appear which now includes an index number in CYAN for each entry.</i>
+4. Input the index number of the entry you want to delete (e.g. enter "2" to delete entry 2 that is listed on the balance history)
+5. A success message will appear if you have completed the above steps correctly.
+    - <i>NOTE: The program will take the user back to the 'edit/view' menu where the user will be able to see the updated balance entries.</i>
+
+![Delete Entry Function Example](docs/delete_entry_example.png)
+
+#### Calculate Amount Function
+The function allows the user to calculate the payment amount required to pay off a debt by a certain date, based off a recurring payment frequency. This is done by requesting inputs from the user (recurring payment frequency and date of when the debt needs to be paid off). Further calculations (using basic algebra) are then completed by the script to output a payment amount. These calculations utilise datetime & math modules/functions. Please follow the below steps:
+
+1. Input "4" in the command line to execute "Debt Calculator" option.
+2. Input the name of the balance you would like to use the debt calculator options on (e.g. "Example 2").
+    - <i>NOTE: A summary of the total balance amount for the selected balance will appear for the user's reference.</i>
+3. Input "1" in the command line to execute "Calculate the payment amount required to pay off "Example 2" by a certain date, based off a recurring payment frequency" option.
+    - <i>NOTE: If a different balance is selected, "Example 2" will be replaced by the selected balance's name.</i>
+4. Input a date in YYYY-MM-DD format for when the debt should be paid in full (e.g. "2024-09-20")
+5. Input a frequency option ('daily', 'weekly', 'fortnightly' or 'monthly') which payments can be made on a consistent basis (e.g. "daily").
+6. Input a date in YYYY-MM-DD format for when the first payment will be made (e.g. "")
+    - <i>NOTE: The example below demonstrates inserting a blank input, which automatically selects today's date.</i>
+7. A success message will appear providing the results of the inputs, advising the user the amount that needs to be paid on a recurring payment frequency (and any additional finaly payment amount) in order for the debt to be paid by a certain date.
+
+![Calculate Amount Function Example](docs/calculate_amount_example.png)
+
+#### Calculate Date Function
+The function allows the user to calculate the date that a debt will be paid off based off a recurring payment amount and frequency. This is done by requesting inputs from the user (recurring payment frequency and payment amount). Further calculations (using basic algebra) are then completed by the script to output a payment date. These calculations utilise datetime & math modules/functions. Please follow the below steps:
+
+1. Input "4" in the command line to execute "Debt Calculator" option.
+2. Input the name of the balance you would like to use the debt calculator options on (e.g. "Example 2").
+    - <i>NOTE: A summary of the total balance amount for the selected balance will appear for the user's reference.</i>
+3. Input "2" in the command line to execute "Calculate the date that 'Example 2' will be paid off based off a recurring payment amount & frequency" option.
+    - <i>NOTE: If a different balance is selected, "Example 2" will be replaced by the selected balance's name.</i>
+4. Input a frequency option ('daily', 'weekly', 'fortnightly' or 'monthly') which payments can be made on a consistent basis (e.g. "weekly").
+5. Input an amount which can be paid per frequency option (e.g. "25")
+    - <i>NOTE: The above step would imply that $25 will be paid on a weekly basis.</i>
+6. Input a date in YYYY-MM-DD format for when the first payment will be made (e.g. "2024-08-01")
+7. A success message will appear providing the results of the inputs, advising that if the user pays $x amount on the chosen frequency period, the selected debt will be paid by a certain date.
+
+![Calculate Date Function Example](docs/calculate_date_example.png)
